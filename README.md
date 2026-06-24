@@ -1,58 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Mini POS Backend API 🛒
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+REST API untuk aplikasi Mini Point of Sale (POS) yang dibangun menggunakan **Laravel 11** dengan **Sanctum Authentication** dan **MySQL**.
 
-## About Laravel
+## 🚀 Tech Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend Framework:** Laravel 11
+- **Database:** MySQL 8
+- **Authentication:** Laravel Sanctum (Bearer Token)
+- **PHP Version:** 8.4+
+- **API Testing:** Bruno
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- ✅ Authentication (Login, Logout, Get User)
+- ✅ Role-based Users (Admin & Kasir)
+- ✅ Category Management (CRUD)
+- ✅ Product Management (CRUD with Filtering)
+- ✅ Transaction System (Checkout with Auto Stock Update)
+- ✅ Invoice Auto-Generation
+- ✅ Dashboard Statistics (Revenue, Top Products, Recent Transactions)
+- ✅ Database Transaction (Rollback Safety)
 
-## Learning Laravel
+## 📋 API Endpoints
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Auth
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/auth/login` | Login user | ❌ |
+| POST | `/api/auth/logout` | Logout user | ✅ |
+| GET | `/api/auth/me` | Get current user | ✅ |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Categories
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/categories` | List all categories | ✅ |
+| POST | `/api/categories` | Create category | ✅ |
+| GET | `/api/categories/{id}` | Get category detail | ✅ |
+| PUT | `/api/categories/{id}` | Update category | ✅ |
+| DELETE | `/api/categories/{id}` | Delete category | ✅ |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Products
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/products` | List products (with filter) | ✅ |
+| POST | `/api/products` | Create product | ✅ |
+| GET | `/api/products/{id}` | Get product detail | ✅ |
+| PUT | `/api/products/{id}` | Update product | ✅ |
+| DELETE | `/api/products/{id}` | Delete product | ✅ |
 
-## Agentic Development
+### Transactions
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/transactions` | List all transactions | ✅ |
+| POST | `/api/transactions` | Create new transaction | ✅ |
+| GET | `/api/transactions/{id}` | Get transaction detail | ✅ |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Dashboard
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/api/dashboard/stats` | Get dashboard statistics | ✅ |
+
+## 🛠️ Installation
+
+### Prerequisites
+- PHP >= 8.4
+- Composer
+- MySQL 8
+- Git
+
+### Setup
 
 ```bash
-composer require laravel/boost --dev
+# Clone repository
+git clone https://github.com/rendraabe-cmd/mini-pos-backend.git
+cd mini-pos-backend
 
-php artisan boost:install
-```
+# Install dependencies
+composer install
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+# Setup environment
+cp .env.example .env
+php artisan key:generate
 
-## Contributing
+# Configure database in .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mini_pos
+DB_USERNAME=root
+DB_PASSWORD=your_password
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Create database
+mysql -u root -p -e "CREATE DATABASE mini_pos;"
 
-## Code of Conduct
+# Run migrations & seeders
+php artisan migrate:fresh --seed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Start server
+php artisan serve
